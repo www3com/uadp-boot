@@ -19,15 +19,15 @@ sso:
         expire-policy: expireAfterWrite
   interceptors:
     token:
-      expire-url: url.com/*.html
-      rules:
-        - include-urls:
-            - /pc/m1
-            - /pc/m2
-          expire-url: http://upbos.com/ucenter/login.html
-        - include-urls:
-            - /mobile
-          expire-url: http://upbos.com/mobileCenter/login.html
+      expire-url: /login.html
+#      rules:
+#        - include-urls:
+#            - /sso/*
+#            - /pc/m2
+#          expire-url: https://baidu.com
+#        - include-urls:
+#            - /mobile
+#          expire-url: http://upbos.com/mobileCenter/login.html
     res:
       exclude-urls:
         - sso/queryUser

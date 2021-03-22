@@ -16,6 +16,7 @@ import org.springframework.util.PathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class TokenInterceptor implements Interceptor {
 
     private String expireUrl = "";
 
-    private List<SsoInterceptorTokenRuleProps> rules;
+    private List<SsoInterceptorTokenRuleProps> rules = new ArrayList<>();
 
 
     public void setExpireUrl(String expireUrl) {
@@ -41,7 +42,9 @@ public class TokenInterceptor implements Interceptor {
     }
 
     public void setRules(List<SsoInterceptorTokenRuleProps> rules) {
-        this.rules = rules;
+        if (rules != null) {
+            this.rules = rules;
+        }
     }
 
 
@@ -68,6 +71,7 @@ public class TokenInterceptor implements Interceptor {
             }
         }
 
+
         // 验证会话是否有效
         if (ssoManager.validateToken(request)) {
             return ChainRet.NEXT;
@@ -83,14 +87,18 @@ public class TokenInterceptor implements Interceptor {
         }
 
         // 重定向到规则中的过期页面
+
         for (SsoInterceptorTokenRuleProps rule : rules) {
             for (String url : rule.getIncludeUrls()) {
                 if (matcher.match(url, requestUri)) {
                     ServletUtils.sendRedirect(response, rule.getExpireUrl());
+                    return ChainRet.BREAK;
                 }
             }
         }
 
+        // 定义的规则中没有找到重定向页面，则重定向到默认页面
+        ServletUtils.sendRedirect(response, this.expireUrl);
         return ChainRet.BREAK;
     }
 
