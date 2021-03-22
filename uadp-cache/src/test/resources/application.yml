@@ -1,0 +1,25 @@
+#cache:
+#  type: caffeine
+#  specs:
+#    - cache-name: default
+#      expire-policy: expireAfterWrite
+#      expire-time: 5s
+#      maximum-size: 11000
+
+# redis配置
+spring:
+  redis:
+#    cluster:
+#      nodes:
+#        - 192.168.1.113:6379
+    host: 192.168.2.202
+    port: 6379
+
+
+cache:
+  type: redis
+  specs:
+    - cache-name: default
+      expire-policy: expireAfterWrite
+      expire-time: 2s
+      maximum-size: 11000

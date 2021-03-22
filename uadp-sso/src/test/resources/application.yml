@@ -1,0 +1,43 @@
+sso:
+  exclude-urls:
+    - /sso/pc/login.do
+    - /sso/mobile/login.do
+
+  token:
+    only-one: true
+    token-name: sid
+    storage-type: redis
+    local-cache: true
+    expire-time: 90m
+    types:
+      - name: web
+        expire-time: 90m
+      - name: mobile
+        expire-time: 12h
+      - name: platform
+        expire-time: 2h
+        expire-policy: expireAfterWrite
+  interceptors:
+    token:
+      expire-url: url.com/*.html
+      rules:
+        - include-urls:
+            - /pc/m1
+            - /pc/m2
+          expire-url: http://upbos.com/ucenter/login.html
+        - include-urls:
+            - /mobile
+          expire-url: http://upbos.com/mobileCenter/login.html
+    res:
+      exclude-urls:
+        - sso/queryUser
+        - 2.html
+    sso-server:
+      login-url: http://upbos.com/login.html
+
+spring:
+  jackson:
+    default-property-inclusion: non_empty
+  redis:
+    host: 192.168.3.202
+    port: 6379

@@ -1,0 +1,11 @@
+
+### 模拟登录
+POST http://localhost:8080/sso/login
+Content-Type: application/x-www-form-urlencoded
+
+username=wangjz&password=test
+
+
+### 查询用户信息
+POST http://localhost:8080/sso/queryUser
+Content-Type: application/x-www-form-urlencoded

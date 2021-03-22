@@ -1,0 +1,19 @@
+dao:
+  dialect: mysql
+  dataSource:
+    druid:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.2.113:3306/uadp?userUnicode=true&characterEncoding=utf-8
+      username: root
+      password: root
+      initialSize: 10
+      minIdle: 5
+      maxActive: 100
+      maxWait: 300
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      testWhileIdle: true
+      validationQuery: select 'x'
+      testOnBorrow: false
+      testOnReturn: false
+  mapperLocations: classpath*:mapper/*.xml
