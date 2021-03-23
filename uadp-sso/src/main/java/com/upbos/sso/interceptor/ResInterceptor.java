@@ -56,7 +56,7 @@ public class ResInterceptor implements Interceptor {
 
         // 放行例外页面
         if (matchIndex(request, excludeUrls, matcher) > -1) {
-            return ChainRet.SKIP;
+            return ChainRet.NEXT;
         }
 
         List<String> resList = ssoManager.getAttr(token.getId(), Constants.SESSION_KEY_PRIVILEGE);

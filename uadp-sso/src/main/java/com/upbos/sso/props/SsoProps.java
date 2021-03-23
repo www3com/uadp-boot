@@ -40,13 +40,6 @@ public class SsoProps {
 
     private SsoCookieProps cookie;
 
-    /**
-     * token 相关设置
-     */
-    private SsoTokenProps token;
-
-    private SsoInterceptorProps interceptors;
-
     private Integer order = 1;
 
 }

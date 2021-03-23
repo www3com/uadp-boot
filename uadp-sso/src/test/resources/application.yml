@@ -1,10 +1,10 @@
 sso:
   exclude-urls:
-    - /sso/pc/login.do
+    - /sso/login
     - /sso/mobile/login.do
 
   token:
-    only-one: true
+    only-one: false
     token-name: sid
     storage-type: redis
     local-cache: true
@@ -29,9 +29,9 @@ sso:
 #            - /mobile
 #          expire-url: http://upbos.com/mobileCenter/login.html
     res:
-      exclude-urls:
-        - sso/queryUser
-        - 2.html
+#      exclude-urls:
+#        - /sso/queryUser
+#        - 2.html
     sso-server:
       login-url: http://upbos.com/login.html
 

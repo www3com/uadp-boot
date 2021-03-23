@@ -20,6 +20,7 @@ import java.util.List;
  */
 
 @Data
+@ConfigurationProperties(prefix = "sso.token")
 public class SsoTokenProps {
 
     /**

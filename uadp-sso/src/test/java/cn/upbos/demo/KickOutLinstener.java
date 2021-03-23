@@ -1,4 +1,4 @@
-package com.yideb.demo;
+package cn.upbos.demo;
 
 import com.upbos.sso.entity.Token;
 import com.upbos.sso.storage.SessionKickOutListener;

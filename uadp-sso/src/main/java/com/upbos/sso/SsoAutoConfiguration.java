@@ -30,12 +30,21 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-@EnableConfigurationProperties(value = {SsoProps.class})
+@EnableConfigurationProperties(value = {SsoProps.class, SsoTokenProps.class, SsoInterceptorTokenProps.class, SsoInterceptorResProps.class})
 @ConditionalOnClass(SsoFilter.class)
 public class SsoAutoConfiguration {
 
     @Resource
     private SsoProps ssoProps;
+
+    @Resource
+    private SsoTokenProps tokenProps;
+
+    @Resource
+    private SsoInterceptorTokenProps interceptorTokenProps;
+
+    @Resource
+    private SsoInterceptorResProps interceptorResProps;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -51,7 +60,7 @@ public class SsoAutoConfiguration {
         if (cookieProps == null) {
             return cookieManager;
         }
-        cookieManager.setTokenName(ssoProps.getToken().getTokenName());
+        cookieManager.setTokenName(tokenProps.getTokenName());
         cookieManager.setMaxAge(cookieProps.getMaxAge());
         cookieManager.setHttpOnly(cookieProps.getHttpOnly());
         cookieManager.setRememberMe(cookieProps.getRememberMe());
@@ -96,7 +105,7 @@ public class SsoAutoConfiguration {
     @ConditionalOnProperty(prefix = "sso", name = "storage", havingValue = "sso")
     public StorageManager ssoStorageManager() {
         SsoStorageManager ssoStorageManager = new SsoStorageManager();
-        ssoStorageManager.setSsoTokenUrl(ssoProps.getToken().getSsoTokenUrl());
+        ssoStorageManager.setSsoTokenUrl(tokenProps.getSsoTokenUrl());
         // 启用本地缓存
         ssoStorageManager.setLocalCacheManager(localCacheManager());
         return ssoStorageManager;
@@ -127,8 +136,8 @@ public class SsoAutoConfiguration {
     @ConditionalOnExistProperty(prefix = "sso.interceptors", name = "token")
     public Interceptor tokenInterceptor() {
         TokenInterceptor tokenInterceptor = new TokenInterceptor();
-        tokenInterceptor.setExpireUrl(ssoProps.getInterceptors().getToken().getExpireUrl());
-        tokenInterceptor.setRules(ssoProps.getInterceptors().getToken().getRules());
+        tokenInterceptor.setExpireUrl(interceptorTokenProps.getExpireUrl());
+        tokenInterceptor.setRules(interceptorTokenProps.getRules());
         return tokenInterceptor;
     }
 
@@ -142,7 +151,7 @@ public class SsoAutoConfiguration {
     @ConditionalOnExistProperty(prefix = "sso.interceptors", name = "res")
     public Interceptor resInterceptor() {
         ResInterceptor resInterceptor = new ResInterceptor();
-        resInterceptor.setExcludeUrls(ssoProps.getInterceptors().getRes().getExcludeUrls());
+        resInterceptor.setExcludeUrls(interceptorResProps.getExcludeUrls());
         return resInterceptor;
     }
 
@@ -176,10 +185,10 @@ public class SsoAutoConfiguration {
      * @param cacheStorageManager
      */
     private void setCacheStorageProps(CacheStorageManager cacheStorageManager) {
-        cacheStorageManager.setOnlyOne(ssoProps.getToken().getOnlyOne());
+        cacheStorageManager.setOnlyOne(tokenProps.getOnlyOne());
 
         // 启用本地缓存
-        if (!ssoProps.getToken().getStorageType().equals("caffeine")) {
+        if (!tokenProps.getStorageType().equals("caffeine")) {
             cacheStorageManager.setLocalCacheManager(localCacheManager());
         }
 
@@ -204,7 +213,7 @@ public class SsoAutoConfiguration {
     private List<CacheDetailProp> getCacheDetailProps() {
         List<CacheDetailProp> detailProps = new ArrayList<>();
 
-        for (SsoTokenTypeProps tokenType : ssoProps.getToken().getTypes()) {
+        for (SsoTokenTypeProps tokenType : tokenProps.getTypes()) {
             CacheDetailProp detailProp = new CacheDetailProp();
             detailProp.setCacheName(tokenType.getName());
             detailProp.setExpireTime(tokenType.getExpireTime());

@@ -3,14 +3,10 @@ package com.upbos.sso.interceptor;
 
 import com.upbos.sso.SsoManager;
 import com.upbos.sso.entity.ChainRet;
-import com.upbos.sso.entity.Token;
-import com.upbos.sso.props.SsoInterceptorProps;
-import com.upbos.sso.props.SsoInterceptorTokenProps;
 import com.upbos.sso.props.SsoInterceptorTokenRuleProps;
 import com.upbos.sso.util.ServletUtils;
 import com.upbos.sso.ret.RetCode;
 import com.upbos.sso.ret.RetData;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -18,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <b>Application name：</b> TokenValidateInterceptor.java <br>

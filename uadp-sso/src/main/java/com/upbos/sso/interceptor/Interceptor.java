@@ -45,7 +45,6 @@ public interface Interceptor {
     ChainRet preHandle(HttpServletRequest request, HttpServletResponse response, SsoManager ssoManager);
 
 
-
     default int matchIndex(HttpServletRequest request, List<String> urlPatterns, PathMatcher matcher) {
         int index = -1;
         if (urlPatterns == null) {

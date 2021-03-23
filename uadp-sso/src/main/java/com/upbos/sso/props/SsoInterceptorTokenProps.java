@@ -5,6 +5,7 @@
 package com.upbos.sso.props;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  */
 
 @Data
+@ConfigurationProperties(prefix = "sso.interceptors.token")
 public class SsoInterceptorTokenProps {
 
 

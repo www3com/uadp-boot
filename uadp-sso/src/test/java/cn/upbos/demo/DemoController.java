@@ -1,7 +1,7 @@
-package com.yideb.demo;
+package cn.upbos.demo;
 
-import cn.hutool.core.map.CamelCaseMap;
 import com.upbos.sso.SsoManager;
+import com.upbos.sso.constant.Constants;
 import com.upbos.sso.entity.Token;
 import com.upbos.sso.ret.RetData;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,11 +37,9 @@ public class DemoController {
 
         Token token = ssoManager.login(request, response, "2");
 
-        Token token1 = ssoManager.getToken(request);
-
-
-
-        token1.getData();
+//        List<String> list = new ArrayList<>();
+//        list.add("/sso/*");
+//        ssoManager.setAttr(token.getId(), Constants.SESSION_KEY_PRIVILEGE, list);
 
         return RetData.success("登录成功", token);
     }

@@ -29,7 +29,7 @@ public class RedisCacheManager implements SingleCacheManager {
     }
 
     public RedisCacheManager(RedisTemplate redisTemplate, List<CacheDetailProp> cacheDetailProps) {
-        this.redisTemplate = redisTemplate;
+        this.setRedisTemplate(redisTemplate);
         this.setSpecs(cacheDetailProps);
     }
 
